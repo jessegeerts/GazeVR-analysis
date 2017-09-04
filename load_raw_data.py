@@ -18,11 +18,11 @@ def load_event_data(filename):
     :return: pandas time-series
     """
     ts = pd.read_csv(filename,
-                             header=None,
-                             parse_dates=[0],
-                             names=['Timestamp', 'Name', 'Value1','Value2'],
-                             date_parser=parse_dates,
-                             delimiter=' ')
+                     header=None,
+                     parse_dates=[0],
+                     names=['Timestamp', 'Name', 'Value1', 'Value2'],
+                     date_parser=parse_dates,
+                     delimiter=' ')
     ts = ts.set_index(['Timestamp'])
     return ts
 
@@ -44,3 +44,16 @@ def load_head_data(filename):
     ts = ts.set_index(['Timestamp'])
     return ts
 
+
+def get_location_dataframe(matrix_dataframe):
+    """
+    Extracts the X, Y and Z location from the 4x4 matrix dataframe above and places them
+    in a smaller dataframe with just the locations per timestamp.
+
+    :param pd.DataFrame matrix_dataframe:
+    :return: pd.DataFrame
+    """
+
+    df_location = matrix_dataframe.loc[:, ['Value.M41', 'Value.M42', 'Value.M43']]
+    df_location.columns = ['X', 'Y', 'Z']
+    return df_location
