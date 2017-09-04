@@ -35,14 +35,10 @@ def load_head_data(filename):
     :param filename:
     :return: pandas time-series containing a 4x4 matrix representing the rotation and translation
     """
-    ts = pd.read_csv(filename,
-                     sep=' ',
-                     parse_dates=[0],
-                     date_parser=parse_dates,
-                     header=0)
-    ts = ts.drop([col for col in ts.columns if 'Unnamed' in col], axis=1)
-    ts = ts.set_index(['Timestamp'])
-    return ts
+    hd = pd.read_csv(filename)
+    hd['Timestamp'] = hd['Timestamp'].apply(parse_dates)
+    hd = hd.set_index('Timestamp')
+    return hd
 
 
 def get_location_dataframe(matrix_dataframe):
