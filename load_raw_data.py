@@ -35,6 +35,7 @@ def load_head_data(filename):
     :param filename:
     :return: pandas time-series containing a 4x4 matrix representing the rotation and translation
     """
+    #TODO: This still doesn't work for data fresh from Bonsai. FIX!
     hd = pd.read_csv(filename)
     hd['Timestamp'] = hd['Timestamp'].apply(parse_dates)
     hd = hd.set_index('Timestamp')
